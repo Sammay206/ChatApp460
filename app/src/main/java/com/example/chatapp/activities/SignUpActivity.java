@@ -74,7 +74,8 @@ public class SignUpActivity extends AppCompatActivity {
         //post to firebase
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         HashMap<String, String> user = new HashMap<>();
-        user.put(Constants.KEY_NAME, binding.inputName.getText().toString());
+        user.put(Constants.KEY_FIRST_NAME, binding.inputFirstName.getText().toString());
+        user.put(Constants.KEY_LAST_NAME, binding.inputLastName.getText().toString());
         user.put(Constants.KEY_EMAIL, binding.inputEmail.getText().toString());
         user.put(Constants.KEY_PASSWORD, binding.inputPassword.getText().toString());
 
@@ -85,7 +86,8 @@ public class SignUpActivity extends AppCompatActivity {
                     loading(false);
 
                     preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                    preferenceManager.putString(Constants.KEY_NAME,binding.inputName.getText().toString());
+                    preferenceManager.putString(Constants.KEY_FIRST_NAME,binding.inputFirstName.getText().toString());
+                    preferenceManager.putString(Constants.KEY_LAST_NAME,binding.inputLastName.getText().toString());
                     preferenceManager.putString(Constants.KEY_IMAGE, encodeImage);
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -133,8 +135,11 @@ public class SignUpActivity extends AppCompatActivity {
     );
 
     private Boolean isValidToSignUp(){
-        if(binding.inputName.getText().toString().isEmpty()){
-            showToast("Please Enter a Name");
+        if(binding.inputFirstName.getText().toString().isEmpty()){
+            showToast("Please Enter a First Name");
+            return false;
+        }else if(binding.inputLastName.getText().toString().isEmpty()){
+            showToast("Please Enter a Last Name");
             return false;
         }else if(binding.inputEmail.getText().toString().isEmpty()){
             showToast("Please Enter an Email");
